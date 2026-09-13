@@ -4,12 +4,20 @@ from fastapi.middleware.cors import CORSMiddleware
 import cv2
 import numpy as np
 from pymongo import MongoClient
+from dotenv import load_dotenv
 
 from lbp_utils import detectar_e_recortar_rosto, calcular_histograma_lbp, distancia_qui_quadrado
 
-# String de conexão direta com o MongoDB Atlas
-MONGO_URI = "mongodb+srv://noblegipar_db_user:usergipar@cluster0.sa9aiot.mongodb.net/reconhecimento_db?appName=Cluster0"
-print(f"DEBUG - MONGODB_URI fixa aplicada: {MONGO_URI}")
+load_dotenv()
+
+AMBIENTE = os.getenv("AMBIENTE", "nuvem")  # "local" ou "nuvem"
+
+if AMBIENTE == "local":
+    MONGO_URI = os.getenv("MONGO_URI_LOCAL")
+else:
+    MONGO_URI = os.getenv("MONGODB_URI")
+
+print(f"Ambiente do MongoDB: {AMBIENTE}")
 
 app = FastAPI(title="Backend da IHM")
 
