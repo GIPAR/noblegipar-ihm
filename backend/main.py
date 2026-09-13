@@ -35,6 +35,7 @@ app.add_middleware(
 
 USUARIOS = {
     "gipar": {"senha": "usergipar", "tipo": "admin"},
+    "user": {"senha": "usergipar", "tipo": "usuario"},
 }
 
 LIMIAR_DISTANCIA = 0.22

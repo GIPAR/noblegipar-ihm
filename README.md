@@ -3,7 +3,7 @@
 Documento tutorial de instalação e utilização da Interface Humano Máquina do repositório "noblegipar-ihm", criada inicialmente para a cadeira de rodas autônoma NARA, sendo posteriormente expandida para a utilização com diferentes projetos e robôs que utilizam o ROS2.
 
 * **Importante!** Leia com atenção durante a instalação
-* O arquivo [Tutorial.md](Tutorial.md) apresenta as explicações, descrições e tutoriais aprofundadas de algumas funcionalidades da interface
+* O arquivo [Tutorial.md](/docs/Tutorial.md) apresenta as explicações, descrições e tutoriais aprofundadas de algumas funcionalidades da interface
 
 ## 1 - Pré-requisitos
 
@@ -83,8 +83,6 @@ cd ~/noblegipar-ihm/frontend && \
     npm run dev
 ```
 
-****Importante! Para logar no site use o usuário "gipar" e senha "usergipar", caso queira a visualização para usuários comuns, utilize "nara" e "usergipar"; são placeholders temporários****
-
 ### Comunicação com o ROS2
 
 Um Website não possui comunicação com o ROS2 nativamente, necessitando iniciar alguns pacotes para a devida troca de informações entre a interface e o robô
@@ -95,7 +93,7 @@ ros2 run web_video_server web_video_server # Em outro terminal
 ros2 run rosapi rosapi_node # Em outro terminal
 ```
 
-Caso o repositório da [noblenara](https://github.com/GIPAR/noblenara) estiver instalada, pode-se rodar este único comando: 
+Caso o repositório da [noblenara](https://github.com/GIPAR/noblenara) estiver instalada, pode-se rodar este único comando:
 
 ``` bash
 ros2 launch smartwheelchair bridgelaunch.xml
@@ -128,5 +126,5 @@ No Firefox, as funcionalidades baseadas em reconhecimento de voz podem não esta
 
 Para a plena organização e desenvolvimento do projeto, todos os Commits de *novas* contribuições devem ser feitas fora do branch principal:
 
-- Cria uma nova branch do repositório com o nome do seu enfoque no projeto
-- Ou faça commit no repositório chamado "Desenvolvimento"
+* Cria uma nova branch do repositório com o nome do seu enfoque no projeto
+* Ou faça commit no repositório chamado "Desenvolvimento"
