@@ -1,0 +1,15 @@
+# Variáveis de ambiente (contém a senha do MongoDB - NUNCA subir isso)
+.env
+
+# Ambiente virtual Python
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/

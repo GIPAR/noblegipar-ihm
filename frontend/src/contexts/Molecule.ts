@@ -11,8 +11,6 @@ export const ShowMapAtom = atom(true)
 
 export const ShowBatteryAtom = atom(true)
 
-export const ShowVoiceChatAtom = atom(false)
-
 export const ShowAssistantAtom = atom(true)
 
 // Átomos de Configurações;

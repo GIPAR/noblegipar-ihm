@@ -1,7 +1,7 @@
 {
-  "name": "nara-ihm",
+  "name": "noblegipar-ihm",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
@@ -10,7 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@google/genai": "^2.8.0",
+    "@google/genai": "^2.15.0",
+    "bootstrap-icons": "^1.13.1",
     "jotai": "^2.16.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

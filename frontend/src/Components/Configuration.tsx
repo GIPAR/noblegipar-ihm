@@ -4,7 +4,7 @@ import './Configuration.css'
 import { useStore } from 'zustand'
 import { GlobalStore, ROStore } from '../contexts/Store'
 import { useAtom, useSetAtom } from 'jotai'
-import { LogAtom, ShowMenuAtom, ShowTeleopAtom, ShowRosapiAtom, ThemeAtom, ShowMapAtom, ShowVoiceChatAtom, SpeedLimitAtom, ShowAssistantAtom, ShowBatteryAtom } from '../contexts/Molecule'
+import { LogAtom, ShowMenuAtom, ShowTeleopAtom, ShowRosapiAtom, ThemeAtom, ShowMapAtom, SpeedLimitAtom, ShowAssistantAtom, ShowBatteryAtom } from '../contexts/Molecule'
 
 export const ConfigurationMenu = () => {
     const [ConfigOption, setConfigOption] = useState(1)
@@ -24,7 +24,6 @@ export const ConfigurationMenu = () => {
     const [StartTeleop, setStartTeleop] = useAtom(ShowTeleopAtom)
     const [Theme, setTheme] = useAtom(ThemeAtom)
     const [ShowMap, setShowMap] = useAtom(ShowMapAtom)
-    const [ShowVoiceChat, setShowVoiceChat] = useAtom(ShowVoiceChatAtom)
     const [ShowAssistant, setShowAssistant] = useAtom(ShowAssistantAtom)
     const [MaxSpeed, setMaxSpeed] = useAtom(SpeedLimitAtom)
     const [ShowBattery, setShowBattery] = useAtom(ShowBatteryAtom)
@@ -93,11 +92,6 @@ export const ConfigurationMenu = () => {
             <>
             <div className='configuration-header'>
               <h1>Ferramentas Gerais</h1>
-            </div>
-
-            <div className='configuration-box'>
-              <div className={`configuration-box-button ${ShowVoiceChat ? 'active' : ''}`} onClick={() => setShowVoiceChat(!ShowVoiceChat)}> </div>
-              <div className='configuration-box-text'> {ShowVoiceChat ? 'Desativar Controle por Voz' : 'Ativar Controle por Voz'} </div>
             </div>
 
             <div className='configuration-box'>

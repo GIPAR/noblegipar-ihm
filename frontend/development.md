@@ -2,8 +2,8 @@
 
 ## Development Notes
 
-1. Organizado os nomes das moléculas
-Changes: Molecule.ts, Configuration.tsx, Dashboard.tsx, Rosapi.tsx, TeleopService.tsx, App.tsx
+1. Permitido que dispositivos externos do host use o backend pela utilização da variável hostIP
+Changes: Intro.tsx
 
 ## Planos Atuais
 

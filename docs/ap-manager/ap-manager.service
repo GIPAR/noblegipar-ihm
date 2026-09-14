@@ -1,0 +1,16 @@
+[Unit]
+Description=Administrador do AccessPoint
+After=network.target NetworkManager.service
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5
+ExecStart=/usr/bin/ap-manager.sh
+ExecStopPost=/usr/bin/systemctl stop dnsmasq
+ExecStopPost=/usr/sbin/iw dev ap0 del
+ExecStopPost=/bin/rm -f /etc/NetworkManager/conf.d/unmanaged.conf
+ExecStopPost=/usr/bin/nmcli general reload conf
+
+[Install]
+WantedBy=multi-user.target

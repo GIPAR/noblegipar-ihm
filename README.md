@@ -1,18 +1,18 @@
 # NOBLENARA IHM
 
-Arquivo README para tutorial de instalação da Interface Humano Máquina do repositório "noblenara-ihm", criada inicialmente para a cadeira de rodas autônoma NARA, sendo posteriormente evoluida para os demais projetos do GIPAR.
+Documento tutorial de instalação e utilização da Interface Humano Máquina do repositório "noblegipar-ihm", criada inicialmente para a cadeira de rodas autônoma NARA, sendo posteriormente expandida para a utilização com diferentes projetos e robôs que utilizam o ROS2.
 
 * **Importante!** Leia com atenção durante a instalação
-* O arquivo Tutorial.md apresenta as explicações, descrições e tutoriais da interface
+* O arquivo [Tutorial.md](/docs/Tutorial.md) apresenta as explicações, descrições e tutoriais aprofundadas de algumas funcionalidades da interface
 
 ## 1 - Pré-requisitos
 
-É necessário instalar bibliotecas e diferentes dependências para o correto funcionamento das simulações e pacotes, sendo que o projeto está sendo testado e construido no seguinte sistema:
+É necessário instalar bibliotecas e diferentes dependências para o correto funcionamento da interface, sendo este rodado e testado no seguinte sistema
 
 * Ubuntu 24.04
 * ROS2 Jazzy
 
-Para a instalação do ROS2 Jazzy, segue-se o tutorial encontrado no seguinte link oficial (https://docs.ros.org/en/jazzy/Installation.html)
+A instalação do ROS2 é necessária para a devida comunicação com os robôs, portanto, instale o ROS2 Jazzy pelo seguinte tutorial oficial [clickando aqui](https://docs.ros.org/en/jazzy/Installation.html). Contudo, espera-se que a maioria das funcionalidades da interface funcione em qualquer versão do ROS2
 
 ### 1.1 - Instalando Dependências Iniciais
 
@@ -22,38 +22,78 @@ Instale as seguintes bibliotecas, sendo o rosbridge necessário para comunicaç�
 sudo apt install ros-jazzy-rosbridge-suite && \
     sudo apt install ros-jazzy-web-video-server && \
     sudo apt install npm && \
+    sudo apt install uvicorn && \
+    sudo apt install pip && \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 ```
 
 Em um novo terminal, rode o comando:
 
 ```bash
+pip install --break-system-packages fastapi pymongo python-dotenv python-multipart "numpy<2" && \
 nvm install 24.11.1 # Apenas funciona se estiver em um novo terminal!
 ```
 
-## 2 - Rodando o IHM
+## 2 - Instalação da Interface
 
-Baixe o repositório e copie o arquivo "noblenara-ihm-main" para o local desejado, preferencialmente no home, então, rode os seguintes comandos:
+Baixe o repositório por meio do git clone diretamente do terminal
+
+```bash
+git clone https://github.com/GIPAR/noblenara-ihm
+```
+
+### 2.1 - Backend
+
+Para o pleno funcionamento do Backend, é necessário criar um arquivo .env com as credenciais do MongoDB — Essas credenciais não são dispostas ao público, entre em contato com a adminstração do repositório para requerê-lo —
 
 ```bash
 # Caso o arquivo foi copiado no home do computador, do contrário, troque a pasta de destino a seguir
-cd ~/noblenara-ihm-main/nara-ihm && \
-    npm install && \
-    npm run dev
+cd noblegipar-ihm/backend && \
+    echo "MONGO_DB=coloque_as_credenciais_aqui" > credenciais.env
 ```
-Após o install, pode-se rodar o pacote em qualquer momento com o comando "npm run dev", desde que o terminal esteja diretamente na pasta "nara-ihm"
 
-****Importante! Para logar no site use o usuário "gipar" e senha "usergipar", caso queira a visualização para usuários comuns, utilize "nara" e "usergipar"; são placeholders temporários****
+### 2.2 - Frontend
 
-Também é necessário rodar outros comandos para o correto funcionamento da comunicação com o ROS2
+Para o funcionamento da Frontend, é necessário instalar os pacotes a partir dos seguintes comandos:
 
 ```bash
-ros2 run rosbridge_server rosbridge_websocket && \
-    ros2 run web_video_server web_video_server && \
-    ros2 run rosapi rosapi_node 
+cd ~/noblegipar-ihm/frontend && \
+    npm install
 ```
 
-Caso a ***simulação*** da NARA estiver instalada, pode-se rodar este único comando 3 em 1: 
+### 2.3 - Hosting (Opcional)
+
+Recomenda-se habilitar o próprio computador para hostear o próprio wifi, enquanto simultaneamente conecta-se com uma rede externa. Para isso, [acesse este arquivo com o passo-a-passo](/docs/ap-manager/ap-manager.md)
+
+## Inicializando o Website
+
+### Inicializando o backend e a frontend
+
+Há duas etapas para iniciar a interface, primeiramente é necessário rodar o backend em um terminal:
+
+```bash
+cd ~/noblegipar-ihm/backend && \
+    uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+
+Com a backend inicializada, rode o frontend em outro terminal
+
+```bash
+cd ~/noblegipar-ihm/frontend && \
+    npm run dev
+```
+
+### Comunicação com o ROS2
+
+Um Website não possui comunicação com o ROS2 nativamente, necessitando iniciar alguns pacotes para a devida troca de informações entre a interface e o robô
+
+```bash
+ros2 run rosbridge_server rosbridge_websocket
+ros2 run web_video_server web_video_server # Em outro terminal
+ros2 run rosapi rosapi_node # Em outro terminal
+```
+
+Caso o repositório da [noblenara](https://github.com/GIPAR/noblenara) estiver instalada, pode-se rodar este único comando:
 
 ``` bash
 ros2 launch smartwheelchair bridgelaunch.xml
@@ -61,7 +101,7 @@ ros2 launch smartwheelchair bridgelaunch.xml
 
 ## 3 - Assistente Inteligente (Gemini)
 
-A IHM da NARA possui integração com o modelo Gemini para consultas em linguagem natural.
+A IHM possui integração com o modelo Gemini para consultas em linguagem natural.
 
 ### Configuração
 
@@ -86,5 +126,5 @@ No Firefox, as funcionalidades baseadas em reconhecimento de voz podem não esta
 
 Para a plena organização e desenvolvimento do projeto, todos os Commits de *novas* contribuições devem ser feitas fora do branch principal:
 
-- Cria uma nova branch do repositório com o nome do seu enfoque no projeto
-- Ou faça commit no repositório chamado "Desenvolvimento"
+* Cria uma nova branch do repositório com o nome do seu enfoque no projeto
+* Ou faça commit no repositório chamado "Desenvolvimento"

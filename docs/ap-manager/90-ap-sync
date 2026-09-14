@@ -1,0 +1,13 @@
+#!/bin/bash
+INTERFACE_NAME="wlp4s0"
+
+if [ "$1" != "$INTERFACE_NAME" ]; then exit 0; fi
+
+case "$2" in
+    pre-up|down)
+        systemctl stop ap-manager.service
+        ;;
+    up)
+        systemctl start ap-manager.service
+        ;;
+esac

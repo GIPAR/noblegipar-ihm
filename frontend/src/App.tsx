@@ -1,5 +1,4 @@
-import VoiceChat from "./Components/VoiceChat";
-import LLMAssistant from "./Components/LLMAssistant";
+import Chat from "./Components/Chat";
 import { useEffect, useRef } from 'react'
 import { Intro } from './Components/Intro';
 import { ConfigurationMenu } from './Components/Configuration';
@@ -10,7 +9,7 @@ import './App.css';
 import { useStore } from 'zustand'
 import { GlobalStore, ROStore } from './contexts/Store'
 import { useAtom } from 'jotai';
-import { ThemeAtom, ShowVoiceChatAtom, ShowAssistantAtom } from './contexts/Molecule';
+import { ThemeAtom, ShowAssistantAtom } from './contexts/Molecule';
 
 function App() {
   const connectionAttemptedRef = useRef(false);
@@ -19,7 +18,6 @@ function App() {
   const ros = useStore(ROStore, (s) => s.ros)
   const robotData = useStore(ROStore, (state) => state.robotData)
   const [Theme] = useAtom(ThemeAtom)
-  const [ShowVoiceChat] = useAtom(ShowVoiceChatAtom)
   const [ShowAssistant] = useAtom(ShowAssistantAtom)
 
   useEffect(() => {
@@ -48,9 +46,7 @@ function App() {
       <main>
         <MessageLog/>
 
-        {ShowVoiceChat ? <VoiceChat /> : null}
-
-        {ShowAssistant ? <LLMAssistant /> : null}
+        {ShowAssistant ? <Chat /> : null}
 
         <div className='App-header'> <h1>
           {robotData.project === "noblenara" ? ( "NARA - Robot HMI" ):( null )}
