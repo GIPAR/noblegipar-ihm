@@ -35,6 +35,8 @@ type SpeechWindow = {
 class SpeechService {
   private recognition: SpeechRecognitionInstance | null = null;
   private isSupported = false;
+  private vozEscolhida: SpeechSynthesisVoice | null = null;
+  private nomeVozPreferida = "Microsoft Maria - Portuguese (Brazil)";
 
   constructor() {
     const speechWindow = window as unknown as SpeechWindow;
@@ -49,6 +51,30 @@ class SpeechService {
       this.recognition.interimResults = false;
       this.isSupported = true;
     }
+
+    if (window.speechSynthesis) {
+      this.carregarVoz();
+      // As vozes às vezes só ficam disponíveis depois desse evento disparar
+      window.speechSynthesis.onvoiceschanged = () => this.carregarVoz();
+    }
+  }
+
+  private carregarVoz(): void {
+    const vozes = window.speechSynthesis.getVoices();
+    this.vozEscolhida =
+      vozes.find((v) => v.name === this.nomeVozPreferida) ||
+      vozes.find((v) => v.lang.startsWith("pt") && /female|mulher|maria|luciana|helena/i.test(v.name)) ||
+      vozes.find((v) => v.lang.startsWith("pt")) ||
+      null;
+  }
+
+  public listarVozesPortugues(): SpeechSynthesisVoice[] {
+    return window.speechSynthesis.getVoices().filter((v) => v.lang.startsWith("pt"));
+  }
+
+  public definirVoz(nome: string): void {
+    this.nomeVozPreferida = nome;
+    this.carregarVoz();
   }
 
   public supported(): boolean {
@@ -85,6 +111,9 @@ class SpeechService {
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "pt-BR";
+    if (this.vozEscolhida) {
+      utterance.voice = this.vozEscolhida;
+    }
     window.speechSynthesis.speak(utterance);
   }
 }
